@@ -53,6 +53,26 @@ public class Calculos {
         }
         
     }
+     /**
+     * Constructor usado para hallar X
+     * @param x Rango final para calcular la ecuacion.
+     * @param dof Cantidad de grados de libertad.
+     * @param num_seg CAntidad de veces a iterar.
+     */
+    public Calculos(double xi, double dof, double num_seg, double p) {
+        this.x = xi;
+        this.dof = dof;
+        this.num_seg=num_seg;
+        this.calF1();
+        this.p1=calcP(this.num_seg);
+        this.p2=calcP(this.num_seg*2);
+        if(Math.abs(this.p1-this.p2) < this.E){
+            this.p1=this.p2;
+        }else{
+            this.p1= new Calculos(this.x, this.dof, this.p2).getP();
+        }
+        
+    }
     private double calcP(double num_seg){
         this.w = this.x / num_seg;
         double sumatorias = 0.0;
