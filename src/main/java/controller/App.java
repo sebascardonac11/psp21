@@ -77,7 +77,7 @@ public class App extends HttpServlet {
         String lst2 = req.getParameter("lst2");/*numseg*/
         String lst3 = req.getParameter("lst3");/*p*/
         //String lst4 = req.getParameter("lst4");
-        Calculos cal = new Calculos(Double.parseDouble(lst1), Double.parseDouble(lst2),Double.parseDouble(lst3));
+        Calculos cal = new Calculos(1,Double.parseDouble(lst1), Double.parseDouble(lst2),Double.parseDouble(lst3));
        
         MainView.showResults(req, resp, cal.getX(), Double.parseDouble(lst1), Double.parseDouble(lst2), Double.parseDouble(lst3));
     }

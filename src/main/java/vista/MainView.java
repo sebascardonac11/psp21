@@ -26,7 +26,7 @@ public class MainView {
 
         PrintWriter pw = resp.getWriter();
         pw.write("<html>");
-        pw.println("<h1>PSP2.0 Program 5</h1>");
+        pw.println("<h1>PSP2.1 Program 6</h1>");
         pw.println("<h2>Sebastian Cardona Correa</h2>");
         pw.println("<h2>E:0.00001</h2>");
         pw.write("<form action=\"calc\" method=\"post\"> \n"
