@@ -19,6 +19,7 @@ package model;
 
 /**
  * Numerical integration with Simpson’s rule
+ *
  * @author sebascardonac11
  */
 public class Calculos {
@@ -33,8 +34,10 @@ public class Calculos {
     private double f1;
     private double p1;
     private double p2;
+    private double parametroD = 0.5;
+
     /**
-     * 
+     *
      * @param x Rango final para calcular la ecuacion.
      * @param dof Cantidad de grados de libertad.
      * @param num_seg CAntidad de veces a iterar.
@@ -42,53 +45,112 @@ public class Calculos {
     public Calculos(double x, double dof, double num_seg) {
         this.x = x;
         this.dof = dof;
-        this.num_seg=num_seg;
+        this.num_seg = num_seg;
         this.calF1();
-        this.p1=calcP(this.num_seg);
-        this.p2=calcP(this.num_seg*2);
-        if(Math.abs(this.p1-this.p2) < this.E){
-            this.p1=this.p2;
-        }else{
-            this.p1= new Calculos(this.x, this.dof, this.p2).getP();
+        this.p1 = calcP(this.num_seg);
+        this.p2 = calcP(this.num_seg * 2);
+        if (Math.abs(this.p1 - this.p2) < this.E) {
+            this.p1 = this.p2;
+        } else {
+            this.p1 = new Calculos(this.getX(), this.dof, this.p2).getP();
         }
-        
+
     }
-     /**
+
+    /**
      * Constructor usado para hallar X
-     * @param x Rango final para calcular la ecuacion.
+     *
+     * @param xi Rango inicial para calcular la ecuacion.
      * @param dof Cantidad de grados de libertad.
      * @param num_seg CAntidad de veces a iterar.
+     * @param p Valor dado
      */
     public Calculos(double xi, double dof, double num_seg, double p) {
-        this.x = xi;
         this.dof = dof;
-        this.num_seg=num_seg;
-        this.calF1();
-        this.p1=calcP(this.num_seg);
-        this.p2=calcP(this.num_seg*2);
-        if(Math.abs(this.p1-this.p2) < this.E){
-            this.p1=this.p2;
-        }else{
-            this.p1= new Calculos(this.x, this.dof, this.p2).getP();
+        this.p1 = 0;
+        this.p2 = 0;
+        this.w = 0;
+        this.num_seg = num_seg;
+        this.x = xi;
+        double diferencia = 0;
+        double p1 = 1;
+         this.calF1();
+        this.p1 = this.calcP(xi, this.num_seg);
+        diferencia = Math.abs(this.p1 - p);
+        if (diferencia > this.E) {
+            this.x = xi;
         }
-        
+        double integralComparar = this.p1;
+
+        if (this.p1 < p) {
+            this.x = this.x + parametroD;
+        } else {
+            this.x = this.x - parametroD;
+        }
+        while (diferencia > this.E) {
+            this.p2 = this.calcP(this.x, num_seg);
+            diferencia = Math.abs(this.p2 - p);
+            /*PENSAR*/
+            if (this.p2 < p) {
+                parametroD = adjustD(this.parametroD, this.p2, p);
+                this.x = this.x + parametroD;
+            } else {
+                parametroD = adjustD(this.parametroD, this.p2, p);
+                this.x = this.x - parametroD;
+            }
+            integralComparar = this.p2;
+            if (diferencia < this.E) {
+                xi = this.x;
+            }
+        }
+
+        /**/
     }
-    private double calcP(double num_seg){
-        this.w = this.x / num_seg;
+
+    /**
+     * Metodo que ajusta el valor de D
+     *
+     * @param adjustDP valor de D
+     * @param parametroIntegral valor de P en la integral
+     * @param parametroBuscadoP valor de P que estamos buscando
+     * @return adjustDP ajustado
+     */
+    public double adjustD(double adjustDP, double parametroIntegral, double parametroBuscadoP) {
+        if (parametroIntegral < parametroBuscadoP) {
+            return adjustDP;
+        }
+        return adjustDP / 2;
+    }
+
+    private double calcP(double num_seg) {
+        this.w = this.getX() / num_seg;
         double sumatorias = 0.0;
         for (int i = 0; i <= num_seg; i++) {
             sumatorias += this.getMultiplicador(getF(this.w * i), i, num_seg);
         }
-       return  (this.w / 3) * sumatorias;
+        return (this.w / 3) * sumatorias;
 
     }
+
+    private double calcP(double xi, double num_seg1) {
+        this.w = xi / num_seg1;
+        double sumatorias = 0.0;
+        for (int i = 0; i <= num_seg1; i++) {
+            sumatorias += this.getMultiplicador(getF(this.w * i), i, num_seg1);
+        }
+        return (this.w / 3) * sumatorias;
+
+    }
+
     /**
      * Resultado de la formula de simpson.
+     *
      * @return variable con el resultado de los calculos.
      */
     public double getP() {
         return this.p1;
     }
+
     /**
      * Calcula la constante de la formula.
      */
@@ -171,6 +233,13 @@ public class Calculos {
                 return n * factorial(n - 1);
             }
         }
+    }
+
+    /**
+     * @return the x
+     */
+    public double getX() {
+        return x;
     }
 
 }

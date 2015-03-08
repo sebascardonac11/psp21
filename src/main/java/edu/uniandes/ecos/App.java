@@ -24,9 +24,9 @@ public class App
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
-         double x=1.1;
-       Calculos cal =new Calculos(x,9,10);
-        System.out.println( "Hello World!" + cal.getP());
+         double x=1.0;
+       Calculos cal =new Calculos(x,6,10,0.20);
+        System.out.println( "Hello World!" + cal.getX());
         /*
         x =1.1
         dof=9
