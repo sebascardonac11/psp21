@@ -30,9 +30,9 @@ public class MainView {
         pw.println("<h2>Sebastian Cardona Correa</h2>");
         pw.println("<h2>E:0.00001</h2>");
         pw.write("<form action=\"calc\" method=\"post\"> \n"
-                + " <p> dof </p>   <input type=\"text\" name=\"lst1\"  value=\"1.1\">\n"
-                + " <p> Numero de Segmento  </p> <input type=\"text\" name=\"lst2\"  value=\"9\">\n"
-                + " <p> p </p> <input type=\"text\" name=\"lst3\"  value=\"10\">\n"
+                + " <p> dof </p>   <input type=\"text\" name=\"lst1\"  value=\"6\">\n"
+                + " <p> Numero de Segmento  </p> <input type=\"text\" name=\"lst2\"  value=\"10\">\n"
+                + " <p> p </p> <input type=\"text\" name=\"lst3\"  value=\"0.20\">\n"
                 + "    <input type=\"submit\" value=\"Calc\">\n"
                 + "</form> ");
 
