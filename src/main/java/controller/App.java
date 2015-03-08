@@ -73,12 +73,12 @@ public class App extends HttpServlet {
      * Method to set the console input for the numbers
      */
     public void consoleInput(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        String lst1 = req.getParameter("lst1");
-        String lst2 = req.getParameter("lst2");
-        String lst3 = req.getParameter("lst3");
-        String lst4 = req.getParameter("lst4");
-        Calculos cal = new Calculos(Double.parseDouble(lst1), Double.parseDouble(lst2),Double.parseDouble(lst3),Double.parseDouble(lst4));
-        
-        MainView.showResults(req, resp, Double.parseDouble(lst1), Double.parseDouble(lst2), Double.parseDouble(lst3), cal.getP());
+        String lst1 = req.getParameter("lst1"); /*dof*/
+        String lst2 = req.getParameter("lst2");/*numseg*/
+        String lst3 = req.getParameter("lst3");/*p*/
+        //String lst4 = req.getParameter("lst4");
+        Calculos cal = new Calculos(Double.parseDouble(lst1), Double.parseDouble(lst2),Double.parseDouble(lst3));
+       
+        MainView.showResults(req, resp, cal.getX(), Double.parseDouble(lst1), Double.parseDouble(lst2), Double.parseDouble(lst3));
     }
 }
